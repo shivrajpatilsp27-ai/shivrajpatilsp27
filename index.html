@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shivraj Patil // Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050508;
+            --primary: #C3B5FF;
+            --primary-glow: rgba(195, 181, 255, 0.4);
+            --white: #FFFFFF;
+        }
+        * { box-sizing: border-box; cursor: crosshair; }
+        body, html {
+            margin: 0; padding: 0; background-color: var(--bg-color); color: var(--primary);
+            font-family: 'Share Tech Mono', monospace; overflow-x: hidden;
+        }
+        .noise {
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.12; z-index: 100; pointer-events: none;
+        }
+        .cyber-grid {
+            position: fixed; inset: 0;
+            background-image: linear-gradient(rgba(195, 181, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(195, 181, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px; z-index: 0; pointer-events: none;
+            perspective: 500px; transform-origin: bottom; animation: gridMove 20s linear infinite;
+        }
+        @keyframes gridMove { 0% { transform: translateY(0); } 100% { transform: translateY(40px); } }
+        .poster-frame { position: fixed; inset: 20px; border: 1px solid rgba(195, 181, 255, 0.2); pointer-events: none; z-index: 90; }
+        
+        .top-nav {
+            position: fixed; top: 0; left: 0; width: 100%; padding: 30px 40px;
+            display: flex; justify-content: space-between; align-items: center; z-index: 50;
+            background: linear-gradient(rgba(5,5,8,0.9) 60%, transparent);
+        }
+        .nav-left { 
+            font-family: 'Syncopate', sans-serif; 
+            font-weight: 700; 
+            font-size: 16px; 
+            color: var(--white); 
+            filter: drop-shadow(0 0 5px var(--primary-glow));
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        .nav-left:hover {
+            color: var(--primary);
+            filter: drop-shadow(0 0 12px var(--primary-glow));
+            transform: scale(1.05);
+        }
+        .nav-mid { flex-grow: 1; margin: 0 40px; height: 1px; background: rgba(195,181,255,0.3); }
+        .nav-right { display: flex; gap: 20px; align-items: center;}
+        
+        .nav-btn {
+            font-family: 'Share Tech Mono', monospace;
+            background: transparent; 
+            color: var(--primary); 
+            text-decoration: none; 
+            font-size: 14px; 
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            padding: 6px 0;
+        }
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-btn:hover { 
+            color: var(--white); 
+            text-shadow: 0 0 12px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+        .nav-btn:hover::after {
+            width: 100%;
+        }
+
+        .wrapper { position: relative; z-index: 10; padding: 120px 40px 80px 40px; max-width: 1000px; margin: 0 auto; transition: opacity 0.6s ease; }
+        .section-label { 
+            font-family: 'Syncopate', sans-serif; 
+            font-weight: 700; 
+            color: var(--white); 
+            font-size: 20px; 
+            margin-bottom: 30px; 
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+        .section-label:hover {
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary-glow);
+        }
+        section { margin-bottom: 100px; }
+
+        .hero { margin-top: 10vh; margin-bottom: 120px; }
+        .hero h1 { 
+            font-family: 'Syncopate', sans-serif; 
+            font-weight: 700; 
+            font-size: clamp(40px, 8vw, 80px); 
+            color: var(--white); 
+            line-height: 0.9; 
+            margin: 0 0 20px 0; 
+            filter: drop-shadow(0 0 10px var(--primary-glow));
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+        }
+        .hero h1:hover {
+            filter: drop-shadow(0 0 25px var(--primary-glow));
+            transform: scale(1.02);
+        }
+        .hero p { font-size: 16px; letter-spacing: 2px; }
+        .hero hr { 
+            border: 0; 
+            height: 1px; 
+            background: var(--primary); 
+            box-shadow: 0 0 8px var(--primary-glow); 
+            margin-top: 40px;
+            transition: all 0.4s ease;
+        }
+        .hero hr:hover {
+            box-shadow: 0 0 20px var(--primary-glow);
+            transform: scaleX(1.05);
+        }
+
+        .about-split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .bio { line-height: 1.6; font-size: 16px; }
+        .stats { display: flex; flex-direction: column; gap: 15px; }
+        .stat-item { 
+            padding: 10px 0;
+            transition: all 0.3s ease;
+        }
+        .stat-item:hover {
+            color: var(--white);
+            text-shadow: 0 0 10px var(--primary-glow);
+            transform: translateX(8px);
+        }
+
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .project-card { 
+            border: 1px solid var(--primary); 
+            padding: 25px; 
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
+            background: rgba(5,5,8,0.5); 
+            backdrop-filter: blur(5px); 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            text-decoration: none;
+            position: relative; 
+            overflow: hidden;
+        }
+        .project-card::before {
+            content: ''; 
+            position: absolute; 
+            left: 0; 
+            top: 0; 
+            height: 100%; 
+            width: 0;
+            background: var(--primary); 
+            z-index: 1; 
+            transition: width 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(195, 181, 255, 0.25);
+            border-color: var(--white);
+        }
+        .project-card:hover::before { 
+            width: 100%; 
+        }
+        .project-card > * { 
+            position: relative; 
+            z-index: 2; 
+            transition: color 0.35s ease; 
+        }
+        .project-card:hover h3, 
+        .project-card:hover .desc, 
+        .project-card:hover .status { 
+            color: var(--bg-color); 
+            text-shadow: none; 
+        }
+        .project-card h3 { 
+            font-family: 'Syncopate', sans-serif; 
+            margin: 0; 
+            font-size: 16px; 
+            color: var(--white); 
+        }
+        .project-card .desc { 
+            font-size: 13.5px; 
+            line-height: 1.55; 
+            flex-grow: 1; 
+            color: var(--primary); 
+        }
+        .project-card .status { 
+            font-size: 12px; 
+            opacity: 0.7; 
+            font-weight: bold; 
+            color: var(--primary); 
+        }
+
+        .skills-cloud { display: flex; flex-wrap: wrap; gap: 10px; }
+        .skill-tag { 
+            border: 1px solid var(--primary); 
+            padding: 8px 14px; 
+            font-family: 'Syncopate', sans-serif; 
+            font-size: 10px; 
+            background: rgba(5,5,8,0.5); 
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(195,181,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .skill-tag:hover { 
+            box-shadow: 0 0 18px var(--primary-glow); 
+            background: rgba(195,181,255,0.15);
+            color: var(--white);
+            transform: translateY(-4px) scale(1.08);
+            border-color: var(--white);
+        }
+        .skill-tag:hover::before {
+            left: 100%;
+        }
+
+        .connect-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+        .connect-list a { 
+            color: var(--primary); 
+            text-decoration: none; 
+            transition: all 0.3s ease;
+            display: inline-block;
+            width: fit-content;
+        }
+        .connect-list a:hover { 
+            color: var(--white); 
+            text-shadow: 0 0 12px var(--primary-glow);
+            transform: translateX(10px);
+        }
+
+        footer { 
+            text-align: center; 
+            font-size: 12px; 
+            opacity: 0.5; 
+            margin-top: 80px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        footer:hover {
+            opacity: 1;
+            color: var(--white);
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .scroll-anim { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .scroll-anim.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .about-split { grid-template-columns: 1fr; }
+            .top-nav { flex-direction: column; gap: 10px; text-align: center; padding: 20px; }
+            .nav-mid { display: none; }
+            .nav-right { justify-content: center; }
+            .hero { margin-top: 15vh; }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="cyber-grid"></div>
+    <div class="poster-frame"></div>
+
+    <div class="top-nav">
+        <div class="nav-left">PATIL</div>
+        <div class="nav-mid"></div>
+        <div class="nav-right">
+            <a href="#projects" class="nav-btn">[ PROJECTS ]</a>
+            <a href="#connect" class="nav-btn">[ CONNECT ]</a>
+        </div>
+    </div>
+
+    <div class="wrapper" id="wrapper">
+        <section class="hero">
+            <div class="scroll-anim" style="transition-delay: 0ms;"><h1>SHIVRAJ<br>PATIL</h1></div>
+            <div class="scroll-anim" style="transition-delay: 80ms;"><p>COMPUTER SCIENCE • AI &amp; MACHINE LEARNING</p></div>
+            <div class="scroll-anim" style="transition-delay: 160ms;"><hr></div>
+        </section>
+
+        <section class="about">
+            <div class="section-label scroll-anim">01 / ABOUT</div>
+            <div class="about-split">
+                <div class="bio scroll-anim" style="transition-delay: 80ms;">
+                    Computer Science Engineering student specializing in Artificial Intelligence and Machine Learning at Lovely Professional University, Phagwara. I currently lead a 13-member team focused on Physics-Informed Machine Learning (PIML). Passionate about software development, database management, and building innovative, data-driven solutions.
+                </div>
+                <div class="stats">
+                    <div class="stat-item scroll-anim" style="transition-delay: 80ms;">[ LPU • PHAGWARA ]</div>
+                    <div class="stat-item scroll-anim" style="transition-delay: 160ms;">[ AI &amp; ML ]</div>
+                    <div class="stat-item scroll-anim" style="transition-delay: 240ms;">[ PIML LEAD ]</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="projects" id="projects">
+            <div class="section-label scroll-anim">02 / PROJECTS</div>
+            <div class="projects-grid">
+
+                <div class="project-card scroll-anim" style="transition-delay: 80ms;">
+                    <h3>Automated AQI Checker</h3>
+                    <div class="desc">
+                        <strong>Dec 2025</strong><br><br>
+                        <strong>Purpose:</strong> Developed an automated Air Quality Index (AQI) monitoring system to track environmental metrics.<br><br>
+                        <strong>Tech Used:</strong> Arduino, MQ-135 Sensor, DHT11 Sensor, C<br><br>
+                        <strong>Outcome:</strong> Successfully simulated the hardware logic in Proteus and implemented sensors to provide real-time air quality diagnostics.
+                    </div>
+                    <div class="status">Status: COMPLETED</div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="skills">
+            <div class="section-label scroll-anim">03 / SKILLS</div>
+            <div class="skills-cloud">
+                <div class="skill-tag scroll-anim">Python</div>
+                <div class="skill-tag scroll-anim">SQL</div>
+                <div class="skill-tag scroll-anim">C</div>
+                <div class="skill-tag scroll-anim">Physics-Informed ML</div>
+                <div class="skill-tag scroll-anim">Data Management</div>
+                <div class="skill-tag scroll-anim">Arduino</div>
+                <div class="skill-tag scroll-anim">DaVinci Resolve</div>
+                <div class="skill-tag scroll-anim">Leadership</div>
+            </div>
+        </section>
+
+        <section class="connect" id="connect">
+            <div class="section-label scroll-anim">04 / CONNECT</div>
+            <div class="connect-list scroll-anim" style="transition-delay: 80ms;">
+                <a href="mailto:shivrajpatilsp77@gmail.com">shivrajpatilsp77@gmail.com</a>
+                <a href="https://www.linkedin.com/in/shivrajpatil27/" target="_blank">LinkedIn → linkedin.com/in/shivrajpatil27/</a>
+                <a href="https://github.com/shivrajpatilsp27-ai" target="_blank">GitHub → github.com/shivrajpatilsp27-ai</a>
+                <a href="tel:+917631430324">+91 7631430324</a>
+            </div>
+        </section>
+
+        <footer class="scroll-anim">
+            SHIVRAJ PATIL
+        </footer>
+    </div>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.scroll-anim').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
